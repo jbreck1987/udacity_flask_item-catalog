@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Restaurant List</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Create Restaurant</a>
+      </nav>
+      <h1>Restaurant List</h1>
+    </header>
+
+    {% for restaurant in restaurants %}
+    <article>
+      <h3>{{restaurant['name']}}</h3>
+      <div>
+        <a href="#">Edit</a>
+        <a href="#">Delete</a>
+      <div>
+    </article>
+    {% endfor %}
+
+  </body>
+</html>
