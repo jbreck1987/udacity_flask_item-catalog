@@ -9,8 +9,11 @@ app = Flask(__name__)
 def list_restaurants():
     return 'This is the GET response from list_restaurants!'
 
+@app.route('/restaurant/add_restaurant', methods=['GET', 'POST'])
 def add_restaurant():
-    pass
+    if request.method == 'POST':
+        return 'This is the POST response from add_restaurant!'
+    return 'This is the GET response from add_restaurant!'
 
 def edit_restaurant():
     pass
