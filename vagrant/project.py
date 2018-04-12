@@ -51,10 +51,9 @@ def list_menu_items(restaurant_id):
            methods=['GET', 'POST'])
 def add_menu_item(restaurant_id):
     if request.method == 'POST':
-        return '''This is the POST response from
-                 add_menu_item for ID {}!'''.format(restaurant_id)
-    return '''This is the GET response from
-              add_menu_item for ID {}!'''.format(restaurant_id)
+        return 'Add item {} to Rest {}'.format(request.form['new_item'],
+                                               restaurant_id)
+    return render_template('add_menu_item.html', restaurant_id=restaurant_id)
 
 
 @app.route('/restaurant/<int:restaurant_id>/<int:item_id>/delete_item',
