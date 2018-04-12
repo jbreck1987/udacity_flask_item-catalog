@@ -1,5 +1,5 @@
 from database_setup import MenuItem, Restaurant, create_db_session
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 from sample_restaurants import restaurants, items
 
 
@@ -17,8 +17,8 @@ def list_restaurants():
            methods=['GET', 'POST'])
 def add_restaurant():
     if request.method == 'POST':
-        return 'This is the POST response from add_restaurant!'
-    return 'This is the GET response from add_restaurant!'
+        return 'Added restaurant {}'.format(request.form['new_restaurant'])
+    return render_template('add_restaurant.html')
 
 
 @app.route('/restaurant/<int:restaurant_id>/edit_restaurant/',
