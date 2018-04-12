@@ -1,6 +1,6 @@
 from database_setup import MenuItem, Restaurant, create_db_session
 from flask import Flask, request, render_template
-from sample_restaurants import restaurants
+from sample_restaurants import restaurants, items
 
 
 # instantiate app as Flask instance
@@ -44,8 +44,7 @@ def delete_restaurant(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/')
 @app.route('/restaurant/<int:restaurant_id>/list_menu/')
 def list_menu_items(restaurant_id):
-    return '''This is the GET response from
-              list_menu_items for ID {}!'''.format(restaurant_id)
+    return render_template('list_menu.html', items=items, restaurant='TEST')
 
 
 @app.route('/restaurant/<int:restaurant_id>/add_item/',
