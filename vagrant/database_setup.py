@@ -40,13 +40,14 @@ class MenuItem(Base):
 # create engine to be used by app modules
 engine = create_engine('sqlite:///restaurantmenu.db')
 Base.metadata.create_all(engine)
-
+Session = sessionmaker(bind=engine)
 
 # def create_db_session():
      # Session = sessionmaker(bind=engine)
      # return Session()
 
 
+@contextmanager
 def session_scope():
     """Provide a transactional scope around a series of operations."""
     session = Session()
