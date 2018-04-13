@@ -21,7 +21,7 @@ def add_restaurant():
     if request.method == 'POST':
         if request.form['new_restaurant']:
             # Open new session and add new instance of restaurant
-            # using the returned in POST request
+            # using the value returned in POST request
             with session_scope() as session:
                 new_rest = Restaurant(name=request.form['new_restaurant'])
                 session.add(new_rest)
@@ -54,15 +54,30 @@ def delete_restaurant(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/')
 @app.route('/restaurant/<int:restaurant_id>/list_menu/')
 def list_menu_items(restaurant_id):
-    return render_template('list_menu.html', items=items, restaurant='TEST')
+        with session_scope() as session:
+            rest_name = session.query(Restaurant.name).\
+                                filter_by(Id=restaurant_id).one()
+            menu_list = session.query(MenuItem).\
+                                filter_by(restaurant_id=restaurant_id)
+            return render_template('list_menu.html',
+                                   items=menu_list,
+                                   rest_name=rest_name[0],
+                                   restaurant_id=restaurant_id)
 
 
 @app.route('/restaurant/<int:restaurant_id>/add_item/',
            methods=['GET', 'POST'])
 def add_menu_item(restaurant_id):
     if request.method == 'POST':
-        return 'Add item {} to Rest {}'.format(request.form['new_item'],
-                                               restaurant_id)
+        if request.form['new_item']:
+            # Open new session and add new instance of MenuItem
+            # using the value returned in POST request
+            with session_scope() as session:
+                new_item = MenuItem(name=request.form['new_item'],
+                                    restaurant_id=restaurant_id)
+                session.add(new_item)
+            return redirect(url_for('list_menu_items',
+                                    restaurant_id=restaurant_id))
     return render_template('add_menu_item.html', restaurant_id=restaurant_id)
 
 
