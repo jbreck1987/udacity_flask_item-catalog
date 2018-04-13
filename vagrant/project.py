@@ -66,19 +66,19 @@ def edit_menu_item(restaurant_id, item_id):
     return render_template('edit_menu_item.html',
                            restaurant_id=restaurant_id,
                            item_id=item_id,
-                           item=item['name'])
+                           name=item['name'])
 
 
 @app.route('/restaurant/<int:restaurant_id>/<int:item_id>/delete_item',
            methods=['GET', 'POST'])
 def delete_menu_item(restaurant_id, item_id):
     if request.method == 'POST':
-        return '''This is the POST response from
-                 delete_menu_item for rest ID {} and item ID {}!
-                 '''.format(restaurant_id, item_id)
-    return '''This is the GET response from
-              delete_menu_item for rest ID {}! and
-              item ID {}'''.format(restaurant_id, item_id)
+        return '{} from Rest ID {} was deleted'.format(item['name'],
+                                                       restaurant_id)
+    return render_template('delete_item.html',
+                           restaurant_id=restaurant_id,
+                           item_id=item_id,
+                           name=item['name'])
 
 
 if __name__ == '__main__':
