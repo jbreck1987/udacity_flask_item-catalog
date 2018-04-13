@@ -110,12 +110,30 @@ def add_menu_item(restaurant_id):
            methods=['GET', 'POST'])
 def edit_menu_item(restaurant_id, item_id):
     if request.method == 'POST':
-        return 'New item name {} to Rest {}'.format(request.form['new_name'],
-                                                    restaurant_id)
-    return render_template('edit_menu_item.html',
-                           restaurant_id=restaurant_id,
-                           item_id=item_id,
-                           name=item['name'])
+        with session_scope() as session:
+            # Loop is to prevent repetitive code to test/query
+            # all values that should be updated from the form
+            for entry in request.form.keys():
+                # If the value for a key is not empty, update it
+                # with the value submitted via the form
+                if request.form[entry]:
+                    session.query(MenuItem).\
+                            filter_by(Id=item_id).\
+                            update({entry: request.form[entry]},
+                                   synchronize_session=False)
+        return redirect(url_for('list_menu_items',
+                                restaurant_id=restaurant_id))
+
+    # Seperate session context for read-only operation
+    with session_scope() as session:
+        # Grab menu item object to pass into template
+        # for placeholder values
+        menu_item = session.query(MenuItem).\
+                            filter_by(restaurant_id=restaurant_id,
+                                      Id=item_id).one()
+        return render_template('edit_menu_item.html',
+                               restaurant_id=restaurant_id,
+                               menu_item=menu_item)
 
 
 @app.route('/restaurant/<int:restaurant_id>/<int:item_id>/delete_item',

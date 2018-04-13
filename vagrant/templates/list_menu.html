@@ -15,11 +15,13 @@
 
     {% for item in items %}
     <article>
-      <h3>{{item['name']}}</h3>
-      <p>{{item['description']}}</p>
-      <p>{{item['price']}}</p>
+      <h3>{{item.name}}</h3>
+      <p>{{item.description}}</p>
+      <p>{{item.price}}</p>
       <div>
-        <a href="#">Edit</a>
+        <a href="{{url_for('edit_menu_item',
+                            restaurant_id=restaurant_id,
+                            item_id=item.Id)}}">Edit</a>
         <a href="#">Delete</a>
       <div>
     </article>
