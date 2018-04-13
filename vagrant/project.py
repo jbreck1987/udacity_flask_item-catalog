@@ -140,12 +140,26 @@ def edit_menu_item(restaurant_id, item_id):
            methods=['GET', 'POST'])
 def delete_menu_item(restaurant_id, item_id):
     if request.method == 'POST':
-        return '{} from Rest ID {} was deleted'.format(item['name'],
-                                                       restaurant_id)
-    return render_template('delete_item.html',
-                           restaurant_id=restaurant_id,
-                           item_id=item_id,
-                           name=item['name'])
+        # Delete menu item based on item ID:restaurant ID pair
+        # that was passed in and send back to restaurant list
+        # *****TO-DO****** - ADD FLASH MESSAGE FOR CONFIRMATION
+            with session_scope() as session:
+                session.query(MenuItem).\
+                        filter_by(Id=item_id,
+                                  restaurant_id=restaurant_id).\
+                        delete(synchronize_session=False)
+            return redirect(url_for('list_menu_items',
+                                    restaurant_id=restaurant_id))
+
+    # Get Item object for placeholder attribute and other fields
+    # and return form
+    with session_scope() as session:
+        menu_item = session.query(MenuItem).\
+                            filter_by(Id=item_id,
+                                      restaurant_id=restaurant_id).one()
+        return render_template('delete_item.html',
+                               restaurant_id=restaurant_id,
+                               menu_item=menu_item)
 
 
 if __name__ == '__main__':
