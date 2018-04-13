@@ -1,6 +1,6 @@
 from database_setup import MenuItem, Restaurant, session_scope
 from flask import Flask, request, render_template, redirect, url_for
-from sample_restaurants import restaurants, items, item, restaurant as rest
+from sample_restaurants import item
 
 
 # instantiate app as Flask instance
@@ -57,11 +57,23 @@ def edit_restaurant(restaurant_id):
            methods=['GET', 'POST'])
 def delete_restaurant(restaurant_id):
     if request.method == 'POST':
-        return 'Rest {}, ID {} was deleted'.format(rest['name'],
-                                                   restaurant_id)
-    return render_template('delete_restaurant.html',
-                           restaurant_id=restaurant_id,
-                           name=rest['name'])
+        # Delete restaurant based on ID that was passed in
+        # and send back to restaurant list
+        # *****TO-DO****** - ADD FLASH MESSAGE FOR CONFIRMATION
+            with session_scope() as session:
+                session.query(Restaurant).\
+                        filter_by(Id=restaurant_id).\
+                        delete(synchronize_session=False)
+            return redirect(url_for('list_restaurants'))
+
+    # Get name of Restaurant for placeholder attribute
+    # and return form
+    with session_scope() as session:
+        rest_name = session.query(Restaurant.name).\
+                            filter_by(Id=restaurant_id).one()
+        return render_template('delete_restaurant.html',
+                               restaurant_id=restaurant_id,
+                               name=rest_name[0])
 
 
 @app.route('/restaurant/<int:restaurant_id>/')
