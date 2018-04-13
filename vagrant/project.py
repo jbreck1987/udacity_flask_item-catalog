@@ -1,6 +1,6 @@
 from database_setup import MenuItem, Restaurant, session_scope
-from flask import Flask, request, render_template, redirect, url_for
-from sample_restaurants import item
+from flask import (Flask, request, render_template, redirect, url_for,
+jsonify)
 
 
 # instantiate app as Flask instance
@@ -160,6 +160,18 @@ def delete_menu_item(restaurant_id, item_id):
         return render_template('delete_item.html',
                                restaurant_id=restaurant_id,
                                menu_item=menu_item)
+
+
+@app.route('/restaurants/json/')
+def json_list_restaurants():
+    with session_scope() as session:
+        rest_list = session.query(Restaurant).all()
+
+        json_list = []
+        for restaurant in rest_list:
+            json_list.append(restaurant.serialize)
+
+        return jsonify(Restaurants=json_list)
 
 
 if __name__ == '__main__':
