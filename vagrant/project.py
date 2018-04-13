@@ -174,5 +174,19 @@ def json_list_restaurants():
         return jsonify(Restaurants=json_list)
 
 
+@app.route('/restaurant/<int:restaurant_id>/json/')
+def json_list_menu(restaurant_id):
+    with session_scope() as session:
+        restaurant = session.query(Restaurant).\
+                            filter_by(Id=restaurant_id).one()
+        menu_list = session.query(MenuItem).\
+                            filter_by(restaurant_id=restaurant_id)
+        json_list = []
+        for menu_item in menu_list:
+            json_list.append(menu_item.serialize)
+
+        return jsonify(MenuItems=json_list,
+                       Restaurant=restaurant.serialize)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
