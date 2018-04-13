@@ -1,23 +1,18 @@
 from database_setup import MenuItem, Restaurant, session_scope
 from flask import Flask, request, render_template, redirect, url_for
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
 from sample_restaurants import restaurants, items, item, restaurant as rest
 
 
 # instantiate app as Flask instance
 app = Flask(__name__)
 
-# Connect engine to our DB and instantiate Session class
-# using that engine
-engine = create_engine('sqlite:///restaurantmenu.db')
-Session = sessionmaker(bind=engine)
-
 
 @app.route('/')
 @app.route('/restaurants/')
 def list_restaurants():
-    return render_template('restaurants.html', restaurants=restaurants)
+    with session_scope() as session:
+        rest_list = session.query(Restaurant).all()
+        return render_template('restaurants.html', restaurants=rest_list)
 
 
 @app.route('/restaurant/add_restaurant/',
