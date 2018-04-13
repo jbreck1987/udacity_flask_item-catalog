@@ -19,7 +19,13 @@ def list_restaurants():
            methods=['GET', 'POST'])
 def add_restaurant():
     if request.method == 'POST':
-        return 'Added restaurant {}'.format(request.form['new_restaurant'])
+        if request.form['new_restaurant']:
+            # Open new session and add new instance of restaurant
+            # using the returned in POST request
+            with session_scope() as session:
+                new_rest = Restaurant(name=request.form['new_restaurant'])
+                session.add(new_rest)
+            return redirect(url_for('list_restaurants'))
     return render_template('add_restaurant.html')
 
 
