@@ -3,6 +3,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine
+from contextlib import contextmanager
 
 
 Base = declarative_base()
@@ -41,6 +42,19 @@ engine = create_engine('sqlite:///restaurantmenu.db')
 Base.metadata.create_all(engine)
 
 
-def create_db_session():
-    Session = sessionmaker(bind=engine)
-    return Session()
+# def create_db_session():
+     # Session = sessionmaker(bind=engine)
+     # return Session()
+
+
+def session_scope():
+    """Provide a transactional scope around a series of operations."""
+    session = Session()
+    try:
+        yield session
+        session.commit()
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()
