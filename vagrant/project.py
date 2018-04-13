@@ -33,11 +33,24 @@ def add_restaurant():
            methods=['GET', 'POST'])
 def edit_restaurant(restaurant_id):
     if request.method == 'POST':
-        return 'New name {} to Rest ID {}'.format(request.form['new_name'],
-                                                  restaurant_id)
-    return render_template('edit_restaurant.html',
-                           restaurant_id=restaurant_id,
-                           name=rest['name'])
+        if request.form['new_name']:
+            # UPDATE the restaurant name using the value
+            # returned in POST request.
+            with session_scope() as session:
+                session.query(Restaurant).\
+                        filter_by(Id=restaurant_id).\
+                        update({Restaurant.name: request.form['new_name']},
+                               synchronize_session=False)
+            return redirect(url_for('list_restaurants'))
+
+    # Get name of Restaurant for placeholder attribute
+    # and return form
+    with session_scope() as session:
+        rest_name = session.query(Restaurant.name).\
+                            filter_by(Id=restaurant_id).one()
+        return render_template('edit_restaurant.html',
+                               restaurant_id=restaurant_id,
+                               name=rest_name[0])
 
 
 @app.route('/restaurant/<int:restaurant_id>/delete_restaurant/',

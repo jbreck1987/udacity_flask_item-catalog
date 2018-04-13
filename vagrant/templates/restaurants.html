@@ -15,7 +15,8 @@
     <article>
       <h3>{{restaurant['name']}}</h3>
       <div>
-        <a href="#">Edit</a>
+        <a href="{{url_for('edit_restaurant',
+                            restaurant_id=restaurant['Id'])}}">Edit</a>
         <a href="#">Delete</a>
       <div>
     </article>
