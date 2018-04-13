@@ -1,6 +1,6 @@
 from database_setup import MenuItem, Restaurant, create_db_session
 from flask import Flask, request, render_template, redirect, url_for
-from sample_restaurants import restaurants, items, item
+from sample_restaurants import restaurants, items, item, restaurant as rest
 
 
 # instantiate app as Flask instance
@@ -25,10 +25,11 @@ def add_restaurant():
            methods=['GET', 'POST'])
 def edit_restaurant(restaurant_id):
     if request.method == 'POST':
-        return '''This is the POST response from
-                 edit_restaurant for ID {}!'''.format(restaurant_id)
-    return '''This is the GET response from
-              edit_restaurant for ID {}!'''.format(restaurant_id)
+        return 'New name {} to Rest ID {}'.format(request.form['new_name'],
+                                                  restaurant_id)
+    return render_template('edit_restaurant.html',
+                           restaurant_id=restaurant_id,
+                           name=rest['name'])
 
 
 @app.route('/restaurant/<int:restaurant_id>/delete_restaurant/',
@@ -60,7 +61,7 @@ def add_menu_item(restaurant_id):
            methods=['GET', 'POST'])
 def edit_menu_item(restaurant_id, item_id):
     if request.method == 'POST':
-        return 'New item name {} to Rest {}'.format(request.form['new_item_name'],
+        return 'New item name {} to Rest {}'.format(request.form['new_name'],
                                                     restaurant_id)
     return render_template('edit_menu_item.html',
                            restaurant_id=restaurant_id,
