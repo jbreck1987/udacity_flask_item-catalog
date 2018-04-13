@@ -5,7 +5,6 @@
   <body>
     <header>
       <nav>
-        <a href="#">Home</a>
         <a href="{{url_for('add_restaurant')}}">Create Restaurant</a>
       </nav>
       <h1>Restaurant List</h1>
@@ -13,12 +12,13 @@
 
     {% for restaurant in restaurants %}
     <article>
-      <h3>{{restaurant['name']}}</h3>
+      <h3><a href="{{url_for('list_menu_items',
+                              restaurant_id=restaurant.Id)}}">{{restaurant.name}}</a></h3>
       <div>
         <a href="{{url_for('edit_restaurant',
-                            restaurant_id=restaurant['Id'])}}">Edit</a>
+                            restaurant_id=restaurant.Id)}}">Edit</a>
         <a href="{{url_for('delete_restaurant',
-                            restaurant_id=restaurant['Id'])}}">Delete</a>
+                            restaurant_id=restaurant.Id)}}">Delete</a>
       <div>
     </article>
     {% endfor %}

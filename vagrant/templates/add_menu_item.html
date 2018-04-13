@@ -5,7 +5,7 @@
   <body>
     <header>
       <nav>
-        <a href="#">Home</a>
+        <a href="{{url_for('list_restaurants')}}">Home</a>
       </nav>
       <h1>Create New Menu Item</h1>
     </header>
@@ -17,7 +17,8 @@
         <input type="text" name="new_item">
       </label>
       <button type='submit'>Submit</button>
-      <a href="#">Cancel</a>
+      <a href="{{url_for('list_menu_items',
+                         restaurant_id=restaurant_id)}}">Cancel</a>
     </form>
   </body>
 </html>

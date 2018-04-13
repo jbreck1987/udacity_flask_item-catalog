@@ -5,7 +5,7 @@
   <body>
     <header>
       <nav>
-        <a href="#">Home</a>
+        <a href="{{url_for('list_restaurants')}}">Home</a>
       </nav>
       <h1>Delete Restaurant</h1>
     </header>
@@ -14,7 +14,7 @@
                              method="POST">
       <h2>Are you sure that you want to delete {{name}}?</h2>
       <button type='submit'>Submit</button>
-      <a href="#">Cancel</a>
+      <a href="{{url_for('list_restaurants')}}">Cancel</a>
     </form>
   </body>
 </html>
