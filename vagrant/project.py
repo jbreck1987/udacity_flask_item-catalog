@@ -174,7 +174,7 @@ def json_list_restaurants():
         return jsonify(Restaurants=json_list)
 
 
-@app.route('/restaurant/<int:restaurant_id>/json/')
+@app.route('/restaurant/<int:restaurant_id>/menu/json/')
 def json_list_menu(restaurant_id):
     with session_scope() as session:
         restaurant = session.query(Restaurant).\
@@ -189,7 +189,7 @@ def json_list_menu(restaurant_id):
                        Restaurant=restaurant.serialize)
 
 
-@app.route('/restaurant/<int:restaurant_id>/<int:item_id>/json/')
+@app.route('/restaurant/<int:restaurant_id>/menu/<int:item_id>/json/')
 def json_list_menu_item(restaurant_id, item_id):
     with session_scope() as session:
         restaurant = session.query(Restaurant).\
