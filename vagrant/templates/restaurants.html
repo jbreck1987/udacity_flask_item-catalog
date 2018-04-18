@@ -18,13 +18,15 @@
           </div>
         </div>
       </nav>
-      <h1>Restaurant List</h1>
+      <div class="title-wrapper">Restaurants</div>
     </header>
     <section class="main-wrapper">
       {% for restaurant in restaurants %}
       <article class="main-restaurant">
-        <h3><a class="restaurant-name" href="{{url_for('list_menu_items',
-                                restaurant_id=restaurant.Id)}}">{{restaurant.name}}</a></h3>
+        <div class="restaurant-name-wrapper">
+          <a class="restaurant-name" href="{{url_for('list_menu_items',
+                                  restaurant_id=restaurant.Id)}}">{{restaurant.name}}</a>
+        </div>
         <div class="restaurant-link-wrapper">
           <a class="restaurant-link" href="{{url_for('edit_restaurant',
                               restaurant_id=restaurant.Id)}}">Edit</a>
@@ -34,6 +36,5 @@
       </article>
       {% endfor %}
     </section>
-    <footer class="footer-wrapper">TBD</footer>
   </body>
 </html>
