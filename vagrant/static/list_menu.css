@@ -1,0 +1,116 @@
+/*
+
+Header Shared
+
+*/
+
+* {
+    box-sizing: border-box;
+    padding: 1px;
+    background: #88bdbc;
+    color: white;
+    text-decoration: none;
+}
+
+.header-wrapper {
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    font-family: sans-serif;
+    flex-direction: column;
+    align-items: center;
+    background: #254e58;
+    margin-bottom: 10px;
+    box-shadow: 1px 0px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 1px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 0px 5px 0px rgba(0,0,0,0.75);
+}
+
+.header-nav {
+    display: flex;
+    width: 100%;
+    background: inherit;
+    align-items: stretch;
+    justify-content: space-between;
+    border-bottom: solid 2px #6e6658;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.nav-homelink {
+    background: inherit;
+    border-radius: 10px;
+}
+
+.nav-createlink {
+    background: inherit;
+    border-radius: 10px;
+}
+
+
+.title-wrapper {
+    background: inherit;
+    font-size: 2em;
+}
+
+/*
+
+Main Shared
+
+*/
+
+.main-wrapper {
+    font-family: sans-serif;
+    display: flex;
+    border-radius: 10px;
+    flex-direction: column;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 1px 2px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 1px 2px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 2px 5px 0px rgba(0,0,0,0.75);
+    background: #254e58;
+}
+
+.main-item {
+    display: flex;
+    height: 150px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 5px;
+    border-bottom: solid 1px #6e6658;
+    background: inherit;
+}
+
+
+.item-name {
+    font-size: 1.3em;
+    background: inherit;
+    width: 80%;
+
+}
+
+.item-price {
+    font-size: 1em;
+    background: inherit;
+    width: 20%;
+}
+
+.item-desc {
+    width: 80%;
+    background: inherit;
+}
+
+
+.item-link-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 20%;
+    background: inherit;
+}
+
+.item-link {
+    background: inherit;
+}

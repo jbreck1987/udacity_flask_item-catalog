@@ -1,33 +1,37 @@
 <html>
   <head>
     <title>Menu</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{url_for('static', filename='list_menu.css')}}" rel="stylesheet">
   </head>
   <body>
-    <header>
-      <nav>
-        <a href="{{url_for('list_restaurants')}}">Home</a>
-        <a href="{{url_for('add_menu_item',
+    <header class="header-wrapper">
+      <nav class="header-nav">
+        <a class="nav-homelink" href="{{url_for('list_restaurants')}}">Home</a>
+        <a class="nav-createlink" href="{{url_for('add_menu_item',
                             restaurant_id=restaurant_id)}}">
         Create New Menu Item</a>
       </nav>
-      <h1>{{rest_name}}</h1>
+      <div class="title-wrapper">{{rest_name}}</div>
     </header>
 
-    {% for item in items %}
-    <article>
-      <h3>{{item.name}}</h3>
-      <p>{{item.description}}</p>
-      <p>{{item.price}}</p>
-      <div>
-        <a href="{{url_for('edit_menu_item',
-                            restaurant_id=restaurant_id,
-                            item_id=item.Id)}}">Edit</a>
-        <a href="{{url_for('delete_menu_item',
-                           restaurant_id=restaurant_id,
-                           item_id=item.Id)}}">Delete</a>
-      <div>
-    </article>
-    {% endfor %}
-
+    <section class="main-wrapper">
+      {% for item in items %}
+      <article class="main-item">
+        <div class="item-name">{{item.name}}</div>
+        <div class="item-price">{{item.price}}</div>
+        <div class="item-desc">{{item.description}}</div>
+        <div class="item-link-wrapper">
+          <a class="item-link" href="{{url_for('edit_menu_item',
+                              restaurant_id=restaurant_id,
+                              item_id=item.Id)}}">Edit</a>
+          <a class="item-link" href="{{url_for('delete_menu_item',
+                             restaurant_id=restaurant_id,
+                             item_id=item.Id)}}">Delete</a>
+        </div>
+      </article>
+      {% endfor %}
+  </section>
   </body>
 </html>
